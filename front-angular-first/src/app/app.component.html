@@ -8,11 +8,11 @@
      <div class="collapse navbar-collapse" id="menu">
         <ul class="nav navbar-nav">
           <li>
-             <a>
+             <a [routerLink]="['']">
                Inicio
              </a>
           </li>
-          <li>
+          <li *ngIf="identity !== null">
               <a>
                 Crear coche
               </a>
@@ -22,12 +22,19 @@
             <li *ngIf="identity !== null">
                <a>{{identity.name}}</a>
             </li>
+            <li *ngIf="identity !== null">
+              <a>
+                <span class="glyphicon glyphicon-log-out">
+                </span>
+                Salir
+              </a>
+           </li>
             <li *ngIf="identity === null">
               <a [routerLink]="['login']">
                 Login
               </a>
             </li>
-            <li>
+            <li *ngIf="identity === null">
                 <a [routerLink]="['register']">
                   Registro
                 </a>
