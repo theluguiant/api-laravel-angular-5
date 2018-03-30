@@ -1,7 +1,7 @@
 <div class="container">
     <div class="col-lg-12 col-md-12 col-xs-12">
         <h2>
-            Formulario de registro2
+            Formulario de registro
         </h2>
         <div class="alert alert-success" *ngIf="status === 'success'">
             {{msn_success}}
@@ -14,7 +14,7 @@
                 <div class="form-group">
                     <label for="name">Nombre</label>
                     <input type="text" class="form-control" id="name" placeholder="Nombre" [(ngModel)]="user.name" name="name" #name="ngModel" >
-                    <span *ngIf=" status === 'error' && type === 'validation' && error.name !== null">
+                    <span *ngIf=" status === 'error' && type === 'validation' && error?.name">
                         {{error.name}}
                     </span>
                 </div>
@@ -27,7 +27,7 @@
                            [(ngModel)]="user.username"
                            #username="ngModel"  
                            placeholder="Username">
-                    <span *ngIf=" status === 'error' && type === 'validation' && error.username !== null">
+                    <span *ngIf=" status === 'error' && type === 'validation' && error?.username">
                             {{error.username}}
                     </span>   
                 </div>
@@ -40,7 +40,7 @@
                            [(ngModel)]="user.email"
                            #email="ngModel"  
                            placeholder="Email">
-                    <span *ngIf=" status === 'error' && type === 'validation' && error.email !== null">
+                    <span *ngIf=" status === 'error' && type === 'validation' && error?.email">
                             {{error.email}}
                     </span>    
                 </div>
@@ -53,7 +53,7 @@
                            [(ngModel)]="user.password"
                            #password="ngModel"  
                            placeholder="contraseña">
-                    <span *ngIf=" status === 'error' &&  type === 'validation' && error.password !== null">
+                    <span *ngIf=" status === 'error' &&  type === 'validation' && error?.password">
                             {{error.password}}
                     </span>        
                 </div>

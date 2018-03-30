@@ -5,6 +5,7 @@ namespace App\Helpers;
 use Firebase\JWT\JWT;
 use DB;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class JwtAuth{
 
@@ -16,18 +17,23 @@ class JwtAuth{
     }
 
     public function signup($sEmail,$sPassword,$sGetToken=null){
-        $oUser = User::where(
-            [
-                'email' => $sEmail,
-                'password' => $sPassword
-            ]
-        )->first();
-
+       
+        $oUser = null;
+        if (Auth::attempt(['email' => $sEmail, 'password' => $sPassword])) {
+            // Authentication passed...
+            $oUser = User::where(
+                [
+                    'email' => $sEmail
+                   
+                ]
+            )->first();
+        }
+   
         $bSignup = false;
         if(is_object($oUser)){
             $bSignup = true;
         }
-
+       
         if(true === $bSignup){
             $aToken = [
                 'sub'   => $oUser->id,
@@ -44,6 +50,7 @@ class JwtAuth{
             if(is_null($sGetToken)){
                 return $sJwt;
             }else{
+                
                 return $oDecodeJwt;
             }
 

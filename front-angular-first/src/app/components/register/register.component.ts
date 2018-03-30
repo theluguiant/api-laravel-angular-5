@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit{
     public user: User;
     public status: string;
     public status_submit = true;
-    public error;
+    public error = [];
     public msn_success;
     public msn_error;
     public type;
@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit{
                     case 'success': {
                             this.status = response.status;
                             this.status_submit  = true;
-                            this.error.name =  null;
+                            this.error = [];
                             this.msn_success = response.msn;
                             form.reset();
                         break;

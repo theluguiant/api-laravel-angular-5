@@ -8,23 +8,56 @@ import { Params } from '@angular/router';
 @Injectable()
 export class UserService {
     public url: string;
+    public token;
 
     constructor(
         public _http: HttpClient
-    ){
+    ) {
         console.log(this.pruebas());
         this.url = GLOBAL.url;
     }
 
-    pruebas(){
+    pruebas() {
         return 'hola mundo';
     }
 
-    registrarUser(user): Observable<any>{
+    registrarUser(user): Observable<any> {
         let json = JSON.stringify(user);
         let params = 'json=' + json;
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
         return this._http.post(this.url + 'register', params, {headers: headers});
     }
-} 
+
+    signup (user, gettoken = null ): Observable<any> {
+        if (gettoken !== null) {
+            user.gettoken = 'true';
+        }
+        let json = JSON.stringify(user);
+        let params = 'json=' + json;
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.post(this.url + 'login', params, {headers: headers});
+    }
+
+    getIdentity(token) {
+        if (localStorage.getItem('token')) {
+            let json = JSON.stringify(token);
+            let params = 'json=' + json;
+            let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+            return this._http.post(this.url + 'gettoken', params, {headers: headers});
+        } else {
+            return null;
+        }
+    }
+
+    getToken() {
+        if (localStorage.getItem('token')) {
+            this.token = JSON.parse(localStorage.getItem('token'));
+        } else {
+            this.token = null;
+        }
+        return this.token;
+    }
+
+}

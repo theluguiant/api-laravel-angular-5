@@ -19,10 +19,13 @@
           </li>
         </ul>
         <ul class="nav navbar-nav pull-right">
-            <li>
-               <a [routerLink]="['login']">
-                 Login
-               </a>
+            <li *ngIf="identity !== null">
+               <a>{{identity.name}}</a>
+            </li>
+            <li *ngIf="identity === null">
+              <a [routerLink]="['login']">
+                Login
+              </a>
             </li>
             <li>
                 <a [routerLink]="['register']">

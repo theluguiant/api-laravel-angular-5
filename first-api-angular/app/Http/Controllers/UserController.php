@@ -9,6 +9,7 @@ use Validator;
 use App\Http\Controllers\InputController;
 use App\Http\Requests\UserRequest;
 use App\Helpers\JwtAuth;
+use App\Http\Requests\LoginRequest;
 
 class UserController extends Controller
 {
@@ -87,28 +88,57 @@ class UserController extends Controller
         $oJwtAuth = new JwtAuth();
 
         $aJson = $request->input('json',null);
-        $aParams = json_decode($aJson);
 
-        $sEmail = (!is_null($aJson) && isset($aParams->email) ? $aParams->email : null);
-        $sPassword = (!is_null($aJson) && isset($aParams->password) ? $aParams->password : null);
-        $sGetToken = (!is_null($aJson) && isset($aParams->gettoken)) ? $aParams->gettoken : true;
+      
+        $this->oInput = new InputController();
+       
+        $aParams  = $this->oInput->processResquest($aJson)['aParams'];
+        $aParamsArray = $this->oInput->processResquest($aJson)['aParamsArray'];
 
-        $sPwd = hash('sha256',$sPassword);
+        $oLoginRequest = new LoginRequest();
+       
 
-        if(!is_null($sEmail) && !is_null($sPassword) && ( null === $sGetToken || 'false' === $sGetToken )){
-            $aSignup = $oJwtAuth->signup($sEmail,$sPwd);
+        $oValidatedData = Validator::make(
+            $aParamsArray,
+            $oLoginRequest->rules(),
+            $oLoginRequest->messages()
+        );
 
-        }else if(null !== $sGetToken ){
+        $aData = [];
+        if ($oValidatedData->passes()) {
+         
+            if(isset($aParams->gettoken)){
 
-            $aSignup = $oJwtAuth->signup($sEmail,$sPwd,$sGetToken);
+                $aSignup =[
+                        'status'  => 'success',
+                        'code'   => 200,
+                        'payload' => [
+                            'token' => $oJwtAuth->signup($aParams->email,$aParams->password,$aParams->gettoken)
+                        ]
+                    ];
+           
+            }else{
+
+                $aSignup = [
+                    'status'  => 'success',
+                    'code'   => 200,
+                    'payload' => [
+                        'token' => $oJwtAuth->signup($aParams->email,$aParams->password)
+                    ]
+                ];
+        
+            }
 
         }else{
-           $aSignup =  [
-               'status'  => 'error',
-               'message' => 'Error al enviar los datos'
-           ];
+            $aSignup =  [
+                'status'  => 'error',
+                'code'   => 200,
+                'msn'     => 'Un error a ocurrido al enviar los datos',
+                'payload' => $oValidatedData->errors()
+            ];
         }
 
+       
         return response()->json($aSignup,200);
 
 

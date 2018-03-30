@@ -21,4 +21,5 @@ Route::get('/api/cars/{id}','CarController@show');
 Route::post('/api/cars','CarController@store');
 Route::post('/api/cars/{id}','CarController@update');
 Route::post('/api/cars/destroy/{id}','CarController@destroy');
+Route::post('/api/gettoken','CheckTokenController@getToken');
 //Route::resource('/api/cars','CarController');
