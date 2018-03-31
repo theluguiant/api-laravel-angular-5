@@ -21,7 +21,6 @@
 
 LOCK TABLES `cars` WRITE;
 /*!40000 ALTER TABLE `cars` DISABLE KEYS */;
-INSERT INTO `cars` VALUES (2,2,'Mercedes Benz','Muy bonito','450000','1','2018-03-20 07:17:16','2018-03-27 08:03:58'),(3,2,'Mercedes Benz','Muy bonito','450000','1','2018-03-20 07:56:59','2018-03-20 07:56:59'),(6,2,'Mercedes Benz','Muy bonito','450000','1','2018-03-20 08:40:07','2018-03-20 08:40:07');
 /*!40000 ALTER TABLE `cars` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -50,7 +49,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (2,2,'fmgarcia','Fredy Mauricio','mauriciogmona@gmail.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',NULL,'2018-03-20 03:26:05','2018-03-20 03:26:05');
+INSERT INTO `users` VALUES (29,2,'fmgarcia','fredy mauricio','mauriciogmona@gmail.com','$2y$10$owDO2ab/nNK94N79AbSkM.0tEfUVL7k0flkZpxgMBz0y82ekj.wT6',NULL,'2018-03-31 06:58:12','2018-03-31 06:58:12','2dcacbc71a471bd13c3164079ae543e8');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -63,4 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-30 13:02:33
+-- Dump completed on 2018-03-30 21:30:36
