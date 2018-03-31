@@ -36,10 +36,8 @@ class JwtAuth{
        
         if(true === $bSignup){
             $aToken = [
-                'sub'   => $oUser->id,
-                'email' => $oUser->email,
+                'sub'   => $oUser->ineternal_value,
                 'name'  => $oUser->name,
-                'username' => $oUser->username,
                 'iat'      => time(),
                 'exp'      => time() + (7*24*60*60)
             ];
@@ -58,7 +56,7 @@ class JwtAuth{
 
             return [
                 'status'  => 'error',
-                'message' => 'Login ha fallado'
+                'message' => 'Email o contraseña invalida'
             ];
 
         }

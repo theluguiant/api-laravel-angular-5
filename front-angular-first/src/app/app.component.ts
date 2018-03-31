@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { UserService } from './services/user.services';
 import { Token } from './models/token';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +10,7 @@ import { Token } from './models/token';
   styleUrls: ['./app.component.css'],
   providers: [UserService]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, DoCheck {
     public identity = null;
     public token;
 
@@ -16,27 +18,31 @@ export class AppComponent implements OnInit {
       private _userService: UserService
     ) {
       if (localStorage.getItem('token')) {
-          this.token = new Token(localStorage.getItem('token'));
-          this._userService.getIdentity(this.token).subscribe(
-              responseTwo => {
-                  switch (responseTwo.status) {
-                    case 'success': {
-                      this.identity = responseTwo.payload;
-                      console.log('success', this.identity);
-                      break;
-                    }
-                    case 'error': {
-                      console.log('error');
-                      break;
-                    }
-                  }
-              },
-              error => {
-                  console.log(<any>error);
-              }
-          );
+        this.identity = JSON.parse(localStorage.getItem('identity'));
+        this.token = localStorage.getItem('token');
+      } else {
+        this.identity = null;
+        this.token = null;
       }
-      console.log('login cargado correctamente');
- 
+    }
+
+    ngOnInit() {
+      if (localStorage.getItem('token')) {
+        this.identity = JSON.parse(localStorage.getItem('identity'));
+        this.token = localStorage.getItem('token');
+      } else {
+        this.identity = null;
+        this.token = null;
+      }
+    }
+
+    ngDoCheck() {
+      if (localStorage.getItem('token')) {
+        this.identity = JSON.parse(localStorage.getItem('identity'));
+        this.token = localStorage.getItem('token');
+      } else {
+        this.identity = null;
+        this.token = null;
+      }
     }
 }

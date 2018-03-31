@@ -44,6 +44,7 @@ class UserController extends Controller
             $oUser->password = bcrypt($aParams->password);
             $oUser->username = $aParams->username;
             $oUser->name = $aParams->name;
+            $oUser->ineternal_value = md5(uniqid(rand(), true));
             $oUser->role = 2;
 
             if($oUser->save()){
@@ -133,7 +134,7 @@ class UserController extends Controller
             $aSignup =  [
                 'status'  => 'error',
                 'code'   => 200,
-                'msn'     => 'Un error a ocurrido al enviar los datos',
+                'msn'     => 'Email o contraseña invalida',
                 'payload' => $oValidatedData->errors()
             ];
         }

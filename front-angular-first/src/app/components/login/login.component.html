@@ -4,10 +4,10 @@
             {{title}}
         </h2>
         <div class="alert alert-success" *ngIf="status === 'success'">
-            {{msn_success}}
+            {{ msn_success }}
         </div>
         <div class="alert alert-danger" *ngIf="status === 'error'">
-            {{msn_error}}
+            {{ msn_error }}
         </div>
         <div class="row">
             <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="col-md-12">
@@ -20,7 +20,7 @@
                            [(ngModel)]="user.email"
                            #username="ngModel"  
                            placeholder="Email">
-                    <span *ngIf=" status === 'error' && type === 'validation' && error?.email">
+                    <span *ngIf=" status === 'error' && error?.email">
                             {{error.email}}
                     </span>   
                 </div>
@@ -33,7 +33,7 @@
                            [(ngModel)]="user.password"
                            #password="ngModel"  
                            placeholder="contraseña">
-                    <span *ngIf=" status === 'error' &&  type === 'validation' &&  error?.password">
+                    <span *ngIf=" status === 'error' &&  error?.password">
                             {{error.password}}
                     </span>        
                 </div>

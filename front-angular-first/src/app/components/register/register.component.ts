@@ -28,8 +28,10 @@ export class RegisterComponent implements OnInit{
         this.user = new User( '', '' , '', '');
     }
 
-    ngOnInit(){
-        console.log('registro cargado correctamente');
+    ngOnInit() {
+        if (localStorage.getItem('token')) {
+            this._router.navigate(['']);
+        }
     }
 
     onSubmit(form){

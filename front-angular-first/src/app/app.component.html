@@ -23,7 +23,7 @@
                <a>{{identity.name}}</a>
             </li>
             <li *ngIf="identity !== null">
-              <a>
+              <a [routerLink]="['logout',1]">
                 <span class="glyphicon glyphicon-log-out">
                 </span>
                 Salir

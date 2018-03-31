@@ -40,7 +40,7 @@ export class UserService {
         return this._http.post(this.url + 'login', params, {headers: headers});
     }
 
-    getIdentity(token) {
+    getIdentity(token): Observable<any> {
         if (localStorage.getItem('token')) {
             let json = JSON.stringify(token);
             let params = 'json=' + json;

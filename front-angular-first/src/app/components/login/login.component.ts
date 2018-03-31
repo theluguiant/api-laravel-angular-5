@@ -17,6 +17,9 @@ export class LoginComponent implements OnInit{
     public token;
     public identity;
     public checkToken;
+    public error;
+    public status;
+    public msn_error;
 
     constructor(
         private _userService: UserService,
@@ -30,29 +33,66 @@ export class LoginComponent implements OnInit{
     ngOnInit(){
         if (localStorage.getItem('token')) {
             this.token = new Token(localStorage.getItem('token'));
+            this._router.navigate(['']);
         }
-        console.log('login cargado correctamente');
+        this.logout();
     }
 
     onSubmit(form){
         this.status_submit  = false;
         this._userService.signup(this.user).subscribe(
             response => {
+                console.log('login', response);
                 switch (response.status) {
                     case 'success': {
-                        this.status_submit = true;
-                        console.log('con token false', response);
-                        this.token = response.payload.token;
-                        localStorage.setItem('token', this.token);
+                        if (response.payload.token.status === 'error') {
+                            this.msn_error = response.payload.token.message;
+                            this.status_submit  = true;
+                            this.status = response.payload.token.status; 
+                            this.error = null;
+                        } else {
+                            this.status_submit = true;
+                            this.status = response.status;
+                            this.token = response.payload.token;
+                            this.error = null;
+                            localStorage.setItem('token', this.token);
+                            let token = new Token(localStorage.getItem('token'));
+                            this._userService.getIdentity(token).subscribe(
+                                responseTwo => {
+                                  switch (responseTwo.status) {
+                                    case 'success': {
+                                        this.identity = responseTwo.payload;
+                                        console.log(this.identity.name);
+                                        localStorage.setItem('identity', JSON.stringify(this.identity));
+                                        break;
+                                    }
+                                    case 'error': {
+                                      localStorage.removeItem('token');
+                                      localStorage.removeItem('identity');
+                                      this.identity = null;
+                                      this.token = null;
+                                      token = null;
+                                      break;
+                                    }
+                                  }
+                                },
+                                error => {
+                                    console.log(<any>error);
+                                }
+                            );
+                            this._router.navigate(['']);
+                        }
                         break;
                     }
                     case 'error': {
+                        this.msn_error = response.msn;
                         this.status_submit  = true;
+                        this.status = response.status; 
+                        this.error = response.payload;
                         break;
                     }
                     default: {
                         this.status_submit  = true;
-                        console.log(response);
                         break;
                     }
 
@@ -63,4 +103,17 @@ export class LoginComponent implements OnInit{
             }
         );
     }
-} 
+
+    logout() {
+        this._route.params.subscribe(params => {
+            let logout = +params['sure'];
+            if (logout === 1) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('identity');
+                this.token = null;
+                this.identity = null;
+                this._router.navigate(['']);
+            }
+        });
+    }
+}
