@@ -25,7 +25,7 @@ Arrancar el serviodor laravel
 por consola ir a la carpeta del proyecto laravel y ejecutar el comando
 
 ```
-php artisan server
+php artisan serve
 ```
 
 con esto arrancamos nuestro servidor laravel, para que siga funcionando no cierren esta consola y abran una nueva para hacer los siguiente procedimientos
