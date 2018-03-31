@@ -6,6 +6,7 @@ use App\Car;
 use Illuminate\Http\Request;
 use App\Helpers\JwtAuth;
 use Validator;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\SaveCarRequest;
 use App\Http\Requests\UpdateCarRequest;
 use App\Http\Controllers\CheckTokenController;
@@ -53,14 +54,39 @@ class CarController extends Controller
 
     }
 
-    public function show($id){
-        $aCars = Car::find($id)->load('user');
-        return response()->json([
-            'cars'   => $aCars,
-            'status' => 'success',
-            'type'   => 'payload',
-            'code'   => 200
-        ],200);
+    public function show($id,Request $request){
+        $hash = $request->header('Authorization',null);
+      
+        if($this->oToken->checkToken($hash)){
+            $aCars = DB::table('cars')
+                        ->select(
+                            'title',
+                            'description',
+                            'price',
+                            'internal',
+                            'status',
+                            'created_at',
+                            'updated_at')
+                        ->where('internal',$id)->first();
+            $iCountCar = count($aCars);   
+            if($iCountCar > 0){
+                return response()->json([
+                    'payload'   => $aCars,
+                    'status' => 'success',
+                    'type'   => 'payload',
+                    'code'   => 200
+                ],200);
+            }else{
+                return response()->json([
+                    'payload'   => null,
+                    'status' => 'error',
+                    'type'   => 'payload',
+                    'code'   => 200
+                ],200);
+            }         
+            
+        }
+       
     }
 
 
@@ -75,10 +101,11 @@ class CarController extends Controller
             $aParams  = $this->oInput->processResquest($aJson)['aParams'];
             $aParamsArray = $this->oInput->processResquest($aJson)['aParamsArray'];
 
-            $aUser = $this->oToken->checkToken($hash,true);
+            $oUser = $this->oToken->checkToken($hash,true);
 
+            $mUser = DB::table('users')->select('id')->where('internal_value',$oUser->sub)->first();
+        
             $oCarRequest = new SaveCarRequest();
-
             $oValidatedData = Validator::make(
                 $aParamsArray,
                 $oCarRequest->rules(),
@@ -88,10 +115,11 @@ class CarController extends Controller
             if ($oValidatedData->passes()) {
 
                 $oCar = new Car();
-                $oCar->user_id = $aUser->sub;
+                $oCar->user_id = $mUser->id;
                 $oCar->title = $aParams->title;
                 $oCar->description = $aParams->description;
                 $oCar->price = $aParams->price;
+                $oCar->internal = md5(uniqid(rand(), true));
                 $oCar->status = $aParams->status;
 
                 if($oCar->save()){
@@ -100,7 +128,7 @@ class CarController extends Controller
                         'type'   => 'payload',
                         'code'   => 200,
                         'msn'    => 'El carro fue registrado con exito',
-                        'payload' => $oCar
+                        'payload' => null
                     ];
                 }else{
                     $aData = [
@@ -157,7 +185,7 @@ class CarController extends Controller
 
             if ($oValidatedData->passes()) {
 
-                if(Car::where('id',$id)->update($aParamsArray)){
+                if(Car::where('internal',$id)->update($aParamsArray)){
                     $aData = [
                         'status' => 'success',
                         'type'   => 'payload',
@@ -170,7 +198,7 @@ class CarController extends Controller
                         'status' => 'error',
                         'type'   => 'updateerror',
                         'code'   => 200,
-                        'msn'    => 'Error al guardar cambios',
+                        'msn'    => 'No se realizaron cambios',
                         'payload' => null
                     ];
                 }
@@ -208,7 +236,7 @@ class CarController extends Controller
         $aData = [];
         if($this->oToken->checkToken($hash)) {
 
-            $oCar = Car::find($id);
+            $oCar = Car::where('internal',$id)->first();
 
             if(!empty($oCar)){
                 if($oCar->delete()){

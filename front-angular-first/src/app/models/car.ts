@@ -1,11 +1,9 @@
-export class Car{
+export class Car {
     constructor(
-        public id: number,
+        public internal: string,
         public title: string,
         public description: string,
-        public price: number,
-        public status: string,
-        public createdAt: any,
-        public updatedAt: any
+        public price: string,
+        public status: string
     ){}
 }

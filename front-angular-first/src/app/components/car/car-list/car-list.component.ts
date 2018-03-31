@@ -23,28 +23,61 @@ export class CarListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCars();
+  }
+
+  getCars(){
     this._car.listCars().subscribe(
-       response => {
-         switch (response.status) {
-           case 'success': {
-              this.allCars = response.payload;
-              this.status = response.status;
-              this.error_type = null;
-            break;
-           }
+      response => {
+        switch (response.status) {
+          case 'success': {
+             this.allCars = response.payload;
+             this.status = response.status;
+             this.error_type = null;
+             this._router.navigate(['cars']);
+           break;
+          }
 
-           case 'error': {
+          case 'error': {
+             console.log(response);
+           break;
+          }
+        }
+      },
+      error => {
+       console.log(<any>error);
+      }
+   );
 
-            break;
+  }
+
+  delete(id){
+    if(localStorage.getItem('token')){
+      let token = localStorage.getItem('token');
+      this._route.params.subscribe(
+        params => {
+        this._car.destroy(token, id).subscribe(
+           response =>{
+              switch (response.status) {
+                case 'success': {
+                  this.status = response.status;
+                  this.getCars();
+                  this.error_type = null;
+                break;
+                }
+    
+                case 'error': {
+                  console.log(response);
+                break;
+                }
+              }
+           },
+           error => {
+              console.log(<any>error);
            }
-           
-         }
-         console.log(response);
-       },
-       error => {
-        console.log(<any>error);
-       }
-    );
+        );
+      });
+    }
   }
 
 }

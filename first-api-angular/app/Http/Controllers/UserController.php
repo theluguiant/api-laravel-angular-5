@@ -44,7 +44,7 @@ class UserController extends Controller
             $oUser->password = bcrypt($aParams->password);
             $oUser->username = $aParams->username;
             $oUser->name = $aParams->name;
-            $oUser->ineternal_value = md5(uniqid(rand(), true));
+            $oUser->internal_value = md5(uniqid(rand(), true));
             $oUser->role = 2;
 
             if($oUser->save()){

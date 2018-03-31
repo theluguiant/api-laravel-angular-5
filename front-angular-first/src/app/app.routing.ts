@@ -15,9 +15,10 @@ const appRoutes: Routes = [
     {path: 'logout/:sure', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'cars', component: CarListComponent},
-    {path: 'car-show/:id', component: CarShowComponent},
-    {path: 'car-edit/:id', component: CarEditComponent},
-    {path: 'car-create', component: CarCreateComponent},
+    {path: 'cars/delete/:internal', component: CarListComponent},
+    {path: 'cars/car-show/:internal', component: CarShowComponent},
+    {path: 'cars/car-edit/:internal', component: CarEditComponent},
+    {path: 'cars/car-create', component: CarCreateComponent},
     {path: '**', component: LoginComponent}
 ];
 
