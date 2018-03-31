@@ -5,7 +5,7 @@ import { UserService } from '../../services/user.services';
 import { Token } from '../../models/token';
 
 @Component({
-    selector: 'home',
+    selector: 'app-home',
     templateUrl: './home.component.html',
     providers: [ UserService ]
 })

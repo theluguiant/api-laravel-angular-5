@@ -8,13 +8,21 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { routing, appRoutingProviders } from './app.routing';
 import { HomeComponent } from './components/home/home.component';
+import { CarCreateComponent } from './components/car/car-create/car-create.component';
+import { CarEditComponent } from './components/car/car-edit/car-edit.component';
+import { CarShowComponent } from './components/car/car-show/car-show.component';
+import { CarListComponent } from './components/car/car-list/car-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    CarCreateComponent,
+    CarEditComponent,
+    CarShowComponent,
+    CarListComponent
   ],
   imports: [
     BrowserModule,

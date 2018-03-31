@@ -31,7 +31,7 @@ class CarController extends Controller
         if($this->oToken->checkToken($hash)){
 
             $aCarsAll = Car::all();
-
+           
             $aData = [
                 'status' => 'success',
                 'type'   => 'payload',
@@ -43,7 +43,7 @@ class CarController extends Controller
             $aData = [
                 'status' => 'error',
                 'type'   => 'nologin',
-                'code'   => 300,
+                'code'   => 200,
                 'msn'    => 'Debe de loguear para registrar el carro',
                 'payload' => null
             ];

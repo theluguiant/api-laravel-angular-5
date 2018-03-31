@@ -6,7 +6,7 @@ import { Token } from '../../models/token';
 
 
 @Component({
-    selector: 'login',
+    selector: 'app-login',
     templateUrl: './login.component.html',
     providers: [ UserService ]
 })
