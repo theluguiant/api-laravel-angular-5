@@ -14,8 +14,8 @@
                 <div class="form-group">
                     <label for="name">Nombre</label>
                     <input type="text" class="form-control" id="name" placeholder="Nombre" [(ngModel)]="user.name" name="name" #name="ngModel" >
-                    <span *ngIf=" status === 'error' && type === 'validation' && error?.name">
-                        {{error.name}}
+                    <span *ngIf=" status === 'error' && errorRegister.name">
+                        {{errorRegister.name}}
                     </span>
                 </div>
                 <div class="form-group">
@@ -27,8 +27,8 @@
                            [(ngModel)]="user.username"
                            #username="ngModel"  
                            placeholder="Username">
-                    <span *ngIf=" status === 'error' && type === 'validation' && error?.username">
-                            {{error.username}}
+                    <span *ngIf=" status === 'error' && errorRegister.username">
+                            {{errorRegister.username}}
                     </span>   
                 </div>
                 <div class="form-group">
@@ -40,8 +40,8 @@
                            [(ngModel)]="user.email"
                            #email="ngModel"  
                            placeholder="Email">
-                    <span *ngIf=" status === 'error' && type === 'validation' && error?.email">
-                            {{error.email}}
+                    <span *ngIf=" status === 'error' && errorRegister.email">
+                            {{errorRegister.email}}
                     </span>    
                 </div>
                 <div class="form-group">
@@ -53,8 +53,8 @@
                            [(ngModel)]="user.password"
                            #password="ngModel"  
                            placeholder="contraseña">
-                    <span *ngIf=" status === 'error' &&  type === 'validation' && error?.password">
-                            {{error.password}}
+                    <span *ngIf=" status === 'error' && errorRegister.password">
+                            {{errorRegister.password}}
                     </span>        
                 </div>
                 <span *ngIf="status_submit === true">

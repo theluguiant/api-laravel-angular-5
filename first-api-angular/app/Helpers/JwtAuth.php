@@ -36,7 +36,7 @@ class JwtAuth{
        
         if(true === $bSignup){
             $aToken = [
-                'sub'   => $oUser->ineternal_value,
+                'sub'   => $oUser->internal_value,
                 'name'  => $oUser->name,
                 'iat'      => time(),
                 'exp'      => time() + (7*24*60*60)

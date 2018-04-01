@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params  } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.services';
-
+import { ErrorRegister } from '../../models/erroregister';
 
 @Component({
     selector: 'app-register',
@@ -12,6 +12,7 @@ import { UserService } from '../../services/user.services';
 export class RegisterComponent implements OnInit{
     public title: string;
     public user: User;
+    public errorRegister: ErrorRegister;
     public status: string;
     public status_submit = true;
     public error = [];
@@ -26,6 +27,7 @@ export class RegisterComponent implements OnInit{
     ){
         this.title = 'Registro';
         this.user = new User( '', '' , '', '');
+        this.errorRegister = new ErrorRegister( '', '', '', '');
     }
 
     ngOnInit() {
@@ -52,7 +54,7 @@ export class RegisterComponent implements OnInit{
                     }
                     case 'error': {
                             this.status = response.status;
-                            this.error = response.payload;
+                            this.errorRegister = response.payload;
                             this.type  = response.type;
                             this.status_submit  = true;
                             this.msn_error = response.msn;

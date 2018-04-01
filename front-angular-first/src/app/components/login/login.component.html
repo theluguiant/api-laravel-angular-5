@@ -17,7 +17,7 @@
                            class="form-control" 
                            id="email" 
                            name="email" 
-                           [(ngModel)]="user.email"
+                           [(ngModel)]="login.email"
                            #username="ngModel"  
                            placeholder="Email">
                     <span *ngIf=" status === 'error' && error?.email">
@@ -30,7 +30,7 @@
                            class="form-control" 
                            id="password" 
                            name="password" 
-                           [(ngModel)]="user.password"
+                           [(ngModel)]="login.password"
                            #password="ngModel"  
                            placeholder="contraseña">
                     <span *ngIf=" status === 'error' &&  error?.password">

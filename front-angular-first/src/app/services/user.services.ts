@@ -42,6 +42,7 @@ export class UserService {
 
     getIdentity(token): Observable<any> {
         if (localStorage.getItem('token')) {
+            console.log('peticion', token);
             let json = JSON.stringify(token);
             let params = 'json=' + json;
             let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');

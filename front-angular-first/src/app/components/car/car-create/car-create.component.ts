@@ -4,6 +4,7 @@ import { User } from '../../../models/user';
 import { UserService } from '../../../services/user.services';
 import { Car } from '../../../models/car';
 import { CarServices } from '../../../services/car.services';
+import { ErrorCar } from '../../../models/errorcar';
 
 @Component({
   selector: 'app-car-create',
@@ -20,7 +21,7 @@ export class CarCreateComponent implements OnInit {
   public msn_error;
   public msn_success;
   public status_submit = true;
-  public error;
+  public errorCar: ErrorCar;
   public type;
 
   constructor(
@@ -45,6 +46,8 @@ export class CarCreateComponent implements OnInit {
       this._router.navigate(['login']);
     } else {
       this.car = new Car( '', '', '', '', '1');
+      this.errorCar = new ErrorCar( '', '', '');
+
     }
   }
 
@@ -56,14 +59,13 @@ export class CarCreateComponent implements OnInit {
                case 'success': {
                   this.status = response.status;
                   this.status_submit  = true;
-                  this.error = [];
                   this.msn_success = response.msn;
                   form.reset();
                 break;
                }
                case 'error': {
                   this.status = response.status;
-                  this.error = response.payload;
+                  this.errorCar = response.payload;
                   this.type  = response.type;
                   this.status_submit  = true;
                   this.msn_error = response.msn;
