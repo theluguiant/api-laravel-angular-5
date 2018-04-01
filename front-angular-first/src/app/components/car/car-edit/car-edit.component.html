@@ -21,8 +21,8 @@
                 <div class="form-group">
                     <label for="title">Nombre:</label>
                     <input type="text" class="form-control" id="title" placeholder="Nombre" [(ngModel)]="car.title" #title="ngModel" name="title" >
-                    <span *ngIf=" status === 'error' && error?.title">
-                        {{error.title}}
+                    <span *ngIf=" status === 'error' && errorCar.title">
+                        {{errorCar.title}}
                     </span>
                 </div>
                 <div class="form-group">
@@ -37,8 +37,8 @@
                       id="description">
   
                     </textarea>
-                    <span *ngIf=" status === 'error' && error?.description">
-                        {{error.description}}
+                    <span *ngIf=" status === 'error' && errorCar.description">
+                        {{errorCar.description}}
                     </span> 
                 </div>
                 <div class="form-group">
@@ -50,8 +50,8 @@
                            [(ngModel)]="car.price"
                            #price="ngModel" 
                            placeholder="price">
-                    <span *ngIf=" status === 'error' && error?.price">
-                            {{error.price}}
+                    <span *ngIf=" status === 'error' && errorCar.price">
+                            {{errorCar.price}}
                     </span>    
                 </div>
                 <span *ngIf="status_submit === true">

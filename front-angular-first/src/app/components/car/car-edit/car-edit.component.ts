@@ -4,7 +4,7 @@ import { Car } from '../../../models/car';
 import { CarServices } from '../../../services/car.services';
 import { User } from '../../../models/user';
 import { UserService } from '../../../services/user.services';
-
+import { ErrorCar } from '../../../models/errorcar';
 
 @Component({
   selector: 'app-car-edit',
@@ -17,7 +17,7 @@ export class CarEditComponent implements OnInit {
   public status_page: string;
   public car: Car;
   public status_submit = true;
-  public error;
+  public errorCar: ErrorCar;
   public status;
   public msn_success;
   public msn_error;
@@ -28,6 +28,7 @@ export class CarEditComponent implements OnInit {
     private _carService: CarServices) { 
       this.title_page = 'Detalle de vehiculo';
       this.car = new Car( '', '', '', '', '' );
+      this.errorCar = new ErrorCar('', '', '');
     }
 
   ngOnInit() {
@@ -76,7 +77,6 @@ export class CarEditComponent implements OnInit {
                 case 'success': {
                     this.status = response.status;
                     this.msn_success = response.msn;
-                    this.error = null;
                     this.status_submit = true;
                 break;
                 }
@@ -85,7 +85,7 @@ export class CarEditComponent implements OnInit {
                       this.status = response.status;
                       this.msn_error = response.msn;
                       console.log('error', this.msn_error);
-                      this.error   = response.payload;
+                      this.errorCar   = response.payload;
                     break;
                 }
             }    

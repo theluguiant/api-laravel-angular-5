@@ -4,6 +4,7 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user.services';
 import { Token } from '../../models/token';
 import { Login } from '../../models/login';
+import { ErrorLogin } from '../../models/errorlogin';
 
 @Component({
     selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit{
     public login: Login;
     public identity;
     public checkToken;
-    public error;
+    public errorLogin: ErrorLogin;
     public status;
     public msn_error;
 
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit{
     ){
         this.title = 'Identificador';
         this.login  = new Login( '', '');
+        this.errorLogin = new ErrorLogin('', '');
     }
 
     ngOnInit(){
@@ -91,7 +93,7 @@ export class LoginComponent implements OnInit{
                         this.msn_error = response.msn;
                         this.status_submit  = true;
                         this.status = response.status;
-                        this.error = response.payload;
+                        this.errorLogin = response.payload;
                         break;
                     }
                     default: {
